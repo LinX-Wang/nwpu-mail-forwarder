@@ -1,10 +1,9 @@
 <div align="center">
 
-<p>
-  <img src="src/nwpu_forwarder/static/nwpu-emblem.svg" alt="西北工业大学校徽" width="72" height="72">
-</p>
-
-# NWPU Mail Forwarder
+<h1 align="center">
+  <img src="src/nwpu_forwarder/static/nwpu-emblem.svg" alt="西北工业大学校徽" width="48" height="48" align="absmiddle">
+  &nbsp;NWPU Mail Forwarder
+</h1>
 
 **少登录一次学校邮箱，少错过一封重要来信。**
 
