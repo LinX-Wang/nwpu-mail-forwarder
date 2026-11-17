@@ -30,16 +30,12 @@ QQ 邮箱收到邮件后，可结合你已有的 **QQ 邮箱提醒、微信「QQ
 
 ## 它是怎么工作的
 
-```mermaid
-flowchart TD
-    A[学校邮箱收到新邮件] -->|IMAP · TLS 加密| B[你自己的 Linux 服务器]
-    B --> C{你选择的模式}
-    C -->|默认| D[通知：发件人、主题、时间与简短预览]
-    C -->|明确授权后| E[完整转发：正文与附件]
-    D -->|QQ SMTP · TLS 加密| F[你的 QQ 邮箱]
-    E -->|QQ SMTP · TLS 加密| F
-    F -. 按账号和客户端设置提醒 .-> G[QQ / 微信 / QQ 邮箱 App]
-```
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="docs/images/mail-flow-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="docs/images/mail-flow-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/mail-flow-dark.svg">
+  <img src="docs/images/mail-flow-light.svg" alt="学校邮箱经 IMAP 连接自托管服务，以通知或授权后的完整转发模式，经 QQ SMTP 发至 QQ 邮箱，再由客户端按设置提醒。" width="100%">
+</picture>
 
 学校邮箱通过正式客户端协议连接，无需让服务器保持网页登录，也不依赖学校统一身份认证的浏览器会话。
 
@@ -181,12 +177,13 @@ python3 -m venv .venv
 
 <div align="center">
 
-<p>Built by</p>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="src/nwpu_forwarder/static/linx-lockup-white.svg">
-  <img src="src/nwpu_forwarder/static/linx-lockup.svg" alt="LinX 个人标识" width="132">
-</picture>
+<p>
+  Built by&nbsp;
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="src/nwpu_forwarder/static/linx-lockup-white.svg">
+    <img src="src/nwpu_forwarder/static/linx-lockup.svg" alt="LinX 个人标识" width="100" align="absmiddle">
+  </picture>
+</p>
 
 <p>学校来信，及时知晓。</p>
 

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="330" viewBox="0 0 960 330" role="img" aria-labelledby="title desc">
+<title id="title">从学校来信到手机提醒</title><desc id="desc">学校邮箱通过 IMAP 连接自托管服务，选择通知或明确授权的完整转发，经 QQ SMTP 发送到 QQ 邮箱。手机提醒取决于账号绑定及客户端设置。</desc>
+<rect x=".5" y=".5" width="959" height="329" rx="16" fill="#ffffff" stroke="#d9dee7"/>
+<g font-family="Inter, Noto Sans SC, Microsoft YaHei, sans-serif" fill="#182230">
+<rect x="74" y="40" width="52" height="52" rx="14" fill="#e6f4ef"/>
+<g transform="translate(84 50)" fill="none" stroke="#087f73" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 13-6 13 6-13 6Z M7 12v10m6-7v7m6-7v7m6-10v10M4 25h24"/></g>
+<text x="100" y="126" font-size="20" font-weight="600" fill="#182230" text-anchor="middle">学校邮箱</text>
+<text x="100" y="153" font-size="14" font-weight="400" fill="#667085" text-anchor="middle">收到新的邮件</text>
+<path d="M152 66h103m-5-4 5 4-5 4" fill="none" stroke="#d9dee7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="203" y="54" font-size="11" font-weight="400" fill="#667085" text-anchor="middle">IMAP · TLS</text>
+<rect x="309" y="40" width="52" height="52" rx="14" fill="#e6f4ef"/>
+<g transform="translate(319 50)" fill="none" stroke="#087f73" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="24" height="11" rx="3"/><rect x="4" y="18" width="24" height="11" rx="3"/><path d="M10 8h.01M10 23h.01M17 8h8M17 23h8"/></g>
+<text x="335" y="126" font-size="20" font-weight="600" fill="#182230" text-anchor="middle">自托管服务</text>
+<text x="335" y="153" font-size="14" font-weight="400" fill="#667085" text-anchor="middle">持续监听 · 自动处理</text>
+<path d="M387 66h103m-5-4 5 4-5 4" fill="none" stroke="#d9dee7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="438" y="54" font-size="11" font-weight="400" fill="#667085" text-anchor="middle">QQ SMTP · TLS</text>
+<rect x="544" y="40" width="52" height="52" rx="14" fill="#e6f4ef"/>
+<g transform="translate(554 50)" fill="none" stroke="#087f73" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="26" height="21" rx="4"/><path d="m4 8 12 10L28 8"/></g>
+<text x="570" y="126" font-size="20" font-weight="600" fill="#182230" text-anchor="middle">QQ 邮箱</text>
+<text x="570" y="153" font-size="14" font-weight="400" fill="#667085" text-anchor="middle">接收通知或完整邮件</text>
+<path d="M622 66h103m-5-4 5 4-5 4" fill="none" stroke="#d9dee7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4 5"/>
+<text x="673" y="54" font-size="11" font-weight="400" fill="#667085" text-anchor="middle">按设置推送</text>
+<rect x="779" y="40" width="52" height="52" rx="14" fill="#e6f4ef"/>
+<g transform="translate(789 50)" fill="none" stroke="#087f73" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="17" height="28" rx="4"/><path d="M13 6h7m-5 20h3M2 10v9m28-9v9"/></g>
+<text x="805" y="126" font-size="20" font-weight="600" fill="#182230" text-anchor="middle">手机提醒</text>
+<text x="805" y="153" font-size="14" font-weight="400" fill="#667085" text-anchor="middle">QQ / 微信 / 邮箱 App</text>
+<path d="M28 187h904" fill="none" stroke="#d9dee7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="30" y="220" font-size="12" font-weight="400" fill="#667085" text-anchor="start">发送方式</text>
+<text x="127" y="220" font-size="15" font-weight="600" fill="#182230" text-anchor="start">默认 · 邮件通知</text>
+<text x="127" y="246" font-size="14" font-weight="400" fill="#667085" text-anchor="start">发件人、主题、时间与简短预览</text>
+<path d="M480 207v45" fill="none" stroke="#d9dee7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+<text x="513" y="220" font-size="15" font-weight="600" fill="#182230" text-anchor="start">授权后 · 完整转发</text>
+<text x="513" y="246" font-size="14" font-weight="400" fill="#667085" text-anchor="start">正文与附件</text>
+<text x="30" y="300" font-size="12" font-weight="400" fill="#667085" text-anchor="start">全程使用标准邮件协议与 TLS 加密</text>
+<text x="930" y="300" font-size="12" font-weight="400" fill="#667085" text-anchor="end">手机提醒需完成绑定并开启通知权限</text>
+</g>
+</svg>
