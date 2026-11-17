@@ -1,6 +1,8 @@
 <div align="center">
 
-<img src="docs/images/banner.svg" alt="NWPU Mail Forwarder — 学校来信，及时知晓" width="100%">
+<p>
+  <img src="src/nwpu_forwarder/static/nwpu-emblem.svg" alt="西北工业大学校徽" width="72" height="72">
+</p>
 
 # NWPU Mail Forwarder
 
@@ -157,6 +159,7 @@ ssh -N -L 127.0.0.1:18765:127.0.0.1:18765 <host>
 迁移时先停旧实例，新实例导入去重与待发送状态后再启动。加密凭据绑定原服务器主机密钥，需要在新服务器重新输入。
 
 ## 开发与测试
+
 ```bash
 python3 -m venv .venv
 .venv/bin/python -m pip install -e '.[test]'
@@ -169,12 +172,23 @@ python3 -m venv .venv
 
 ## 许可与致谢
 
-代码以 [MIT License](LICENSE) 开源。本项目是个人工具，**并非西北工业大学官方产品**，也不代表 QQ 邮箱、QQ 或微信。学校与个人标识的权利不包含在代码许可证中，来源与使用范围见 [标识说明](docs/BRAND_ASSETS.md)。
+代码以 [MIT License](LICENSE) 开源。
+
+本项目是个人工具，**并非西北工业大学官方产品**，也不代表 QQ 邮箱、QQ 或微信。
+
+学校与个人标识的权利不包含在代码许可证中，来源与使用范围见 [标识说明](docs/BRAND_ASSETS.md)。
 
 感谢学校邮件服务及 QQ 邮箱提供标准客户端协议，让日常收件更方便。
 
 <div align="center">
 
-**Built by LinX** · 学校来信，及时知晓。
+<p>Built by</p>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="src/nwpu_forwarder/static/linx-lockup-white.svg">
+  <img src="src/nwpu_forwarder/static/linx-lockup.svg" alt="LinX 个人标识" width="132">
+</picture>
+
+<p>学校来信，及时知晓。</p>
 
 </div>
