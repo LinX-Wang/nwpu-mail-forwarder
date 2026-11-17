@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% from 'components.html' import icon with context %}
+{% block auth_content %}
+<section class="auth-introduction">
+<div class="auth-brand"><span class="brand-mark university-mark"><img src="{{ asset_url('nwpu-emblem.svg') }}" alt="西北工业大学校徽" width="72" height="72"></span><div><strong>NWPU Mail Forwarder</strong><span class="auth-brand-caption">西工大邮件小助手</span></div></div>
+<span class="auth-eyebrow">你的邮箱，你的工作空间</span>
+<h2 class="auth-headline">学校来信，<br>集中掌握。</h2>
+<p class="auth-lead">让学校邮件进入你的日常收件箱。<br>在自己的服务器上，持续监听、安全通知。</p>
+<div class="auth-mail-route" aria-label="学校邮箱通过 IMAP 监听，由 QQ SMTP 发送通知"><div>{{ icon('mail') }}<strong>学校邮箱</strong><span>INBOX · IMAP</span></div>{{ icon('arrow') }}<div>{{ icon('forward') }}<strong>个人邮箱</strong><span>QQ · SMTP</span></div></div>
+<div class="auth-principles"><p>{{ icon('activity') }}<span><strong>持续运行</strong>电脑关机后，服务器仍独立监听。</span></p><p>{{ icon('shield') }}<span><strong>安全连接</strong>使用正式客户端协议与加密连接。</span></p><p>{{ icon('lock') }}<span><strong>个人掌控</strong>凭据由服务器管理，日志保留在本地。</span></p></div>
+</section>
+<section class="auth-entry"><div class="auth-card"><span class="auth-eyebrow">登录管理控制台</span><h1>欢迎回来</h1><p class="auth-description">查看运行状态，管理邮箱与转发设置。</p>{% if error %}<div class="notice notice-danger" role="alert">{{ icon('info') }}<span>{{ error }}</span></div>{% endif %}<form method="post" data-login-form><input type="hidden" name="csrf" value="{{ session.csrf }}"><label class="form-field">账号（学号）<input type="text" name="username" inputmode="numeric" pattern="[0-9]{6,20}" minlength="6" maxlength="20" required autocomplete="username" placeholder="输入你的学号" autofocus></label><label class="form-field">登录密码<input type="password" name="password" required autocomplete="current-password" placeholder="输入自己设置的登录密码"></label><button class="button button-primary auth-submit">进入私有面板{{ icon('arrow') }}</button></form><p class="auth-help">使用自己设置的登录密码，与学校邮箱客户端密码不同。</p><div class="auth-mail-entry"><a href="https://mail.nwpu.edu.cn/" target="_blank" rel="noopener noreferrer" aria-label="前往西工大邮箱（在新标签页打开）">前往西工大邮箱{{ icon('external') }}</a></div><div class="auth-footer">{{ icon('shield') }}{% if public_access %}HTTPS 加密访问{% else %}SSH 私有访问{% endif %}<span>v0.1.0</span></div></div><div class="auth-maker"><span>Built by</span><img class="logo-light" src="{{ asset_url('linx-lockup.svg') }}" alt="LinX" width="110" height="34"><img class="logo-dark" src="{{ asset_url('linx-lockup-white.svg') }}" alt="LinX" width="74" height="23"></div></section>
+{% endblock %}

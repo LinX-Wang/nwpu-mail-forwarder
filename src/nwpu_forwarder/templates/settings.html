@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% from 'components.html' import icon, badge with context %}
+{% block content %}
+{% if message %}<div class="notice {{ 'notice-danger' if '失败' in message else 'notice-success' }}" role="status" data-save-result="{{ 'failed' if '失败' in message else 'saved' }}" data-toast="{{ 'danger' if '失败' in message else 'success' }}">{{ icon('info') }}<span>{{ message }}</span></div>{% endif %}
+<div class="notice setting-reminder" role="note"><span class="reminder-icon">{{ icon('lock') }}</span><div class="reminder-copy"><strong>修改配置前，请先暂停监听</strong><span>等待当前发送完成后再保存</span></div><a class="reminder-action" href="{{ url_for('dashboard') }}">前往运行概览{{ icon('arrow') }}</a></div>
+<form method="post" id="settings-form" data-settings-form data-initial-mode="{{ config.mode }}">
+<input type="hidden" name="csrf" value="{{ session.csrf }}">
+<div class="settings-grid" {% if forwarding %}hidden{% endif %}>
+{% for school in [true, false] %}
+<section class="panel settings-panel">
+  <div class="panel-heading"><div class="section-heading"><span class="account-icon">{{ icon('mail' if school else 'forward') }}</span><div><h2>{{ '西工大邮箱' if school else 'QQ 邮箱' }}</h2><p>{{ '收件账号 · IMAP' if school else '发送与接收账号 · SMTP' }}</p></div></div><span {{ 'data-imap-status' if school else 'data-smtp-status' }}>{{ badge('获取状态中') }}</span></div>
+  <div class="form-body">
+    <div class="form-section"><h3>账户身份</h3><label class="form-field">{{ '学校邮箱地址' if school else 'QQ 邮箱地址' }}<input name="{{ 'school_address' if school else 'qq_address' }}" type="email" value="{{ config.school_address if school else config.qq_address }}" autocomplete="off" placeholder="{{ 'name@mail.nwpu.edu.cn' if school else 'name@qq.com' }}" {% if not forwarding %}required{% endif %}></label></div>
+    <div class="form-section"><h3>服务器信息</h3><div class="field-grid server-fields"><label class="form-field">{{ 'IMAP 服务器' if school else 'SMTP 服务器' }}<input name="{{ 'imap_host' if school else 'smtp_host' }}" value="{{ config.imap_host if school else config.smtp_host }}" required spellcheck="false"></label><label class="form-field">端口<input type="number" name="{{ 'imap_port' if school else 'smtp_port' }}" aria-label="{{ 'IMAP 端口' if school else 'SMTP 端口' }}" min="1" max="65535" value="{{ config.imap_port if school else config.smtp_port }}" required></label></div><div class="security-line">{{ icon('shield') }}SSL / TLS 已开启 · 验证服务器证书</div></div>
+    <div class="form-section"><h3>安全认证</h3><div class="form-field"><span>{{ '客户端专用密码' if school else 'SMTP 授权码' }}</span><div class="masked-credential">{{ icon('lock') }}<span aria-label="凭据由服务器管理，不展示密码">••••••••••••••••</span><a class="credential-edit" href="#credential-guide" data-open-credentials>修改</a></div><span class="field-help">{{ '使用学校生成的客户端密码。' if school else '使用 QQ SMTP 授权码，而非 QQ 登录密码。' }}凭据由服务器加密管理。</span></div></div>
+    <div class="account-connection"><span class="field-caption">连接状态</span><p class="connection-detail" {{ 'data-imap-detail' if school else 'data-smtp-detail' }}>正在获取连接状态</p><time class="connection-time" {{ 'data-imap-check-time' if school else 'data-smtp-check-time' }}>尚无验证记录</time></div>
+    {% include 'credential_tutorial.html' %}
+  </div>
+  <div class="panel-bottom"><button class="button button-secondary" type="button" data-command="{{ 'test_imap' if school else 'test_smtp' }}">{{ icon('mail' if school else 'shield') }}{{ '测试学校连接' if school else '测试 QQ SMTP' }}</button>{% if not school %}<button class="button button-ghost" type="button" data-command="test_mail">{{ icon('forward') }}发送测试邮件</button>{% else %}<span class="field-help">只读访问 INBOX</span>{% endif %}</div>
+</section>
+{% endfor %}
+</div>
+<div class="forwarding-layout" {% if not forwarding %}hidden{% endif %}>
+  <section class="panel forwarding-content"><div class="panel-heading"><div><h2>通知与邮件内容</h2><p>控制发送到个人邮箱的信息范围。</p></div></div><div class="form-body">
+    <div class="destination-row"><span class="account-icon">{{ icon('mail') }}</span><div><span class="field-caption">转发目标邮箱</span><strong>{{ config.qq_address or '尚未配置 QQ 邮箱' }}</strong></div><a class="button button-ghost button-small" href="{{ url_for('settings') }}">修改邮箱</a></div>
+    <div class="content-fields"><label class="form-field">转发模式<select name="mode" id="forward-mode" aria-label="转发模式"><option value="notification" {{ 'selected' if config.mode=='notification' }}>仅通知</option><option value="full" {{ 'selected' if config.mode=='full' }}>完整转发</option></select><span class="field-help" data-mode-help>仅发送主题、发件人、收件时间与简短预览。</span></label>
+    <label class="form-field">完整邮件大小限制<div class="input-with-unit"><input type="number" min="1" max="100" name="max_message_mib" aria-label="完整邮件大小限制" value="{{ config.max_message_mib }}" required><span>MiB</span></div><span class="field-help">超过限制改发简短通知，并记录原因。</span></label></div>
+    <label class="check-row attachment-option"><input type="checkbox" name="attachments" {{ 'checked' if config.attachments }}><span><strong>保留原始附件</strong><span>仅完整转发模式生效；正文内嵌图片仍会保留。</span></span></label>
+  </div></section>
+  <section class="panel forwarding-recovery"><div class="panel-heading"><div><h2>监听与异常恢复</h2><p>持续运行的检测与重试策略。</p></div></div><div class="form-body">
+    <label class="form-field">轮询间隔<div class="input-with-unit"><input type="number" min="60" max="3600" name="poll_seconds" aria-label="轮询间隔" value="{{ config.poll_seconds }}" required><span>秒</span></div><span class="field-help">不支持 IDLE 时生效 · 60–3600 秒。</span></label>
+    <div class="policy-row"><div><strong>IMAP IDLE</strong><p>支持时自动启用。</p></div><span class="badge badge-info" data-listener-mode>自动检测</span></div>
+    <div class="policy-row"><div><strong>失败自动重试</strong><p>指数退避，最长间隔 30 分钟。</p></div>{{ badge('自动恢复','success') }}</div><p class="field-help retry-policy">最大重试次数：持续重试。认证失败需更新凭据，永久错误需人工处理。</p>
+  </div></section>
+  <section class="panel consent-panel"><div class="panel-heading"><div class="section-heading"><span class="section-icon">{{ icon('shield') }}</span><div><h2>转发权限与安全确认</h2><p>勾选代表你的明确授权，保存后才会生效。</p></div></div><span class="badge badge-{{ 'success' if config.consent else 'neutral' }}" data-saved-consent>{{ '已保存：完整转发已授权' if config.full_consent and config.consent else '已保存：仅通知已授权' if config.consent else '已保存：尚未授权' }}</span></div>
+    <div class="form-body permission-grid"><label class="check-row"><input type="checkbox" name="consent" {{ 'checked' if config.consent }}><span><strong>允许发送个人邮箱通知</strong><span>允许通过个人 QQ 邮箱发送学校邮件通知，含简短正文预览。</span></span></label><label class="check-row"><input type="checkbox" name="full_consent" {{ 'checked' if config.full_consent }}><span><strong>允许完整邮件及附件转发</strong><span>我已确认学校规定允许。默认关闭，必须主动确认后才可完整转发。</span></span></label><p class="permission-note">{{ icon('lock') }}仅连接学校 IMAP 与 QQ SMTP；运行日志不记录邮件正文或附件。面板仅展示已保存的短摘要。</p></div>
+  </section>
+</div>
+<div class="save-bar"><div><strong data-save-state>全部更改已保存</strong><p data-save-hint>保存后重新验证连接，再启动监听。</p></div><button class="button button-primary" type="submit">{{ icon('check') }}保存{{ '转发设置' if forwarding else '邮箱配置' }}</button></div>
+</form>
+{% if not forwarding %}<details class="credential-guide" id="credential-guide"><summary>{{ icon('lock') }}修改密码与授权码</summary><div><p>SSH 登录服务器后运行凭据向导，按提示隐藏输入；留空保留原值。</p><code>sudo nwpu-forwarder credentials</code><p>完成后重启服务并重新验证连接。密码和授权码不要填入聊天或日志。</p><code>sudo systemctl restart nwpu-forwarder-worker nwpu-forwarder-web</code></div></details>{% endif %}
+{% endblock %}

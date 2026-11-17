@@ -1,0 +1,32 @@
+[Unit]
+Description=NWPU Mail Forwarder listener and sender
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=nwpu-forwarder
+Group=nwpu-forwarder
+UMask=0077
+ExecStart=/opt/nwpu-mail-forwarder/current/.venv/bin/nwpu-forwarder worker
+Restart=on-failure
+RestartSec=30
+TimeoutStopSec=90
+LoadCredentialEncrypted=school_password:/etc/nwpu-mail-forwarder/credentials/school_password
+LoadCredentialEncrypted=qq_password:/etc/nwpu-mail-forwarder/credentials/qq_password
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=/var/lib/nwpu-mail-forwarder /var/log/nwpu-mail-forwarder /etc/nwpu-mail-forwarder/settings
+
+[Install]
+WantedBy=multi-user.target

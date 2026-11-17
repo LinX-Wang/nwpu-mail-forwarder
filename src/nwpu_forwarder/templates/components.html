@@ -1,0 +1,40 @@
+{% macro icon(name, class='') -%}
+<svg class="icon {{ class }}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+{% if name == 'mail' %}<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>
+{% elif name == 'overview' %}<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+{% elif name == 'forward' %}<path d="M4 7h11m-4-4 4 4-4 4M20 17H9m4-4-4 4 4 4"/>
+{% elif name == 'logs' %}<path d="m5 7 4 5-4 5m8 0h6"/><rect x="2" y="3" width="20" height="18" rx="3"/>
+{% elif name == 'refresh' %}<path d="M20 7v5h-5M4 17v-5h5M6 6a8 8 0 0 1 13 2M5 16a8 8 0 0 0 13 2"/>
+{% elif name == 'play' %}<path d="m8 5 11 7-11 7Z"/>
+{% elif name == 'stop' %}<rect x="5" y="5" width="14" height="14" rx="2"/>
+{% elif name == 'arrow' %}<path d="M5 12h14m-5-5 5 5-5 5"/>
+{% elif name == 'external' %}<path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/>
+{% elif name == 'shield' %}<path d="m12 3 8 3v6c0 4-4 7-8 9-4-2-8-5-8-9V6Z"/><path d="m8 12 3 3 5-6"/>
+{% elif name == 'activity' %}<path d="M3 12h4l3-8 4 16 3-8h4"/>
+{% elif name == 'logout' %}<path d="M9 4H4v16h5m0-8h12m-4-4 4 4-4 4"/>
+{% elif name == 'menu' %}<path d="M4 6h16M4 12h16M4 18h16"/>
+{% elif name == 'check' %}<path d="m5 12 4 4L19 6"/>
+{% elif name == 'info' %}<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.01"/>
+{% elif name == 'search' %}<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>
+{% elif name == 'copy' %}<rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/>
+{% elif name == 'trash' %}<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/>
+{% elif name == 'lock' %}<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/>
+{% endif %}</svg>
+{%- endmacro %}
+{% macro badge(text, tone='neutral', dot=true) -%}<span class="badge badge-{{ tone }}">{% if dot %}<span class="status-dot"></span>{% endif %}{{ text }}</span>{%- endmacro %}
+{% macro action_button(action, text, tone='secondary') -%}<form method="post" action="{{ url_for('action') }}" data-operation><input type="hidden" name="csrf" value="{{ session.csrf }}"><button class="button button-{{ tone }}" name="action" value="{{ action }}">{{ icon('mail' if action=='test_imap' else 'shield' if action=='test_smtp' else 'forward') }}{{ text }}</button></form>{%- endmacro %}
+
+{% macro mail_task(task) -%}
+<details class="task-row" data-task-id="{{ task.id }}">
+  <summary class="task-trigger">
+    <div class="task-heading"><strong class="task-subject">{{ (task.subject or '邮件摘要暂不可用')|mailtext }}</strong>{{ badge(task.status|label, 'success' if task.status in ['sent','duplicate'] else 'danger' if task.status=='failed' else 'warning' if task.status in ['retry','needs_review'] else 'info') }}<span class="task-chevron">{{ icon('arrow') }}</span></div>
+    <div class="task-meta"><span>{{ task.sender|default('发件人未留存', true)|mailtext }}</span><time>收件 {{ task.received|localtime }}</time><span>尝试 {{ task.attempts }} 次</span></div>
+  </summary>
+  <div class="task-expanded"><div class="detail-caption">正文摘要 <span>最多 300 字 · 链接已隐藏</span></div><p class="task-preview">{{ (task.preview or '这条旧记录尚未保存正文预览。')|mailtext }}</p>
+    <div class="detail-caption">附件信息</div><p class="task-attachments">{% for filename in task.attachments|default([]) %}{{ filename|mailtext }}{% if not loop.last %} · {% endif %}{% else %}未留存附件信息或无附件{% endfor %}</p>
+    <div class="task-detail"><span>UID {{ task.uid }}</span><span>{{ '转发于' if task.completed else '检测于' }} {{ (task.completed or task.detected)|localtime }}</span>{% if task.status=='retry' %}<span>下次重试 {{ task.next_attempt|localtime }}</span>{% endif %}</div><code class="task-id">{{ task.id }}</code>
+    {% if task.error or task.notice %}<p class="task-note">{{ task.error|label if task.error else '' }} {{ task.notice|label if task.notice else '' }}</p>{% endif %}
+    {% if task.status in ['failed','retry','needs_review'] %}<form method="post" action="{{ url_for('action') }}" data-operation {% if task.status=='needs_review' %}data-confirm="确认后将发送此时间异常的邮件任务。"{% endif %}><input type="hidden" name="csrf" value="{{ session.csrf }}"><input type="hidden" name="task_id" value="{{ task.id }}"><button class="button button-secondary button-small" name="action" value="retry">{{ '确认并发送' if task.status=='needs_review' else '重试任务' }}</button></form>{% endif %}
+  </div>
+</details>
+{%- endmacro %}

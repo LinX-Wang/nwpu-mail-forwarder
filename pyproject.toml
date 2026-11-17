@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nwpu-mail-forwarder"
+version = "0.1.0"
+description = "Self-hosted IMAP to SMTP notifications with private management and portable state"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = ["IMAPClient>=3.0,<4", "Flask>=3.1,<4", "gunicorn>=23,<24; sys_platform != 'win32'"]
+
+[project.urls]
+Homepage = "https://github.com/LinX-Wang/nwpu-mail-forwarder"
+Repository = "https://github.com/LinX-Wang/nwpu-mail-forwarder"
+Issues = "https://github.com/LinX-Wang/nwpu-mail-forwarder/issues"
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10", "cryptography>=44,<51", "tzdata; sys_platform == 'win32'"]
+ui-test = ["playwright>=1.50,<2"]
+font-build = ["fonttools[woff]>=4.55,<5"]
+
+[project.scripts]
+nwpu-forwarder = "nwpu_forwarder.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+nwpu_forwarder = ["templates/*.html", "static/*.css", "static/*.js", "static/*.svg", "static/fonts/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

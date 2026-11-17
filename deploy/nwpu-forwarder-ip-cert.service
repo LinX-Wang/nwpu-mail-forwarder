@@ -1,0 +1,10 @@
+[Unit]
+Description=Renew the NWPU panel public IP certificate
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+UMask=0077
+ExecStart=/opt/nwpu-mail-forwarder/acme-venv/bin/certbot renew --non-interactive --quiet --cert-name nwpu-forwarder-ip --config-dir /etc/letsencrypt-nwpu --work-dir /var/lib/nwpu-mail-forwarder-certbot --logs-dir /var/log/nwpu-mail-forwarder-certbot --deploy-hook /usr/local/lib/nwpu-mail-forwarder/install-ip-certificate.sh
+TimeoutStartSec=1800

@@ -1,0 +1,35 @@
+/* Shared colors, typography and spacing. Light and dark themes. */
+:root {
+color-scheme: light;
+  --bg: #F8FAFC; --surface: #FFFFFF; --text: #182230; --muted: #667085;
+  --raised: #EDF3F6;
+  --selection: #087F73; --selection-soft: #E6F4EF; --selection-border: #B9DDD3;
+  --border: #D9DEE7; --primary: #175CD3; --primary-hover: #004EEB;
+  --on-accent: #FFFFFF; --accent: #087F73; --accent-hover: #06695F; --accent-soft: #E3F7F4;
+  --success: #067647; --warning: #B56808; --danger: #B42318;
+  --button-border-hover: #84ADFF; --danger-border: #F5C9C5;
+  --danger-hover: #FFE4E1; --focus-ring: #B6E8DF;
+  --neutral: #64748B; --info-soft: #EFF6FF; --success-soft: #F0FDF4;
+  --warning-soft: #FFFBEB; --danger-soft: #FEF2F2; --neutral-soft: #F1F5F9;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px;
+  --text-xs: 13px; --text-sm: 14px; --text-base: 15px; --text-title: 18px;
+  --radius: 12px; --sidebar-width: 220px; --transition: 180ms ease;
+  --shadow: 0 1px 2px rgb(15 23 42 / 3%);
+  --font: Inter, 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  --mono: 'LinX JetBrains Mono', 'Cascadia Code', 'SFMono-Regular', Consolas, 'Noto Sans SC', monospace;
+}
+html[data-theme="dark"] {
+color-scheme: dark;
+  --bg: #0F171D; --surface: #15212D; --text: #E2EDF5; --muted: #A0B2C5;
+  --raised: #1B2D37;
+  --selection: #60D2B6; --selection-soft: #193A32; --selection-border: #30564B;
+  --border: #2C4050; --primary: #71C8BC; --primary-hover: #A1E0D7;
+  --accent: #137F73; --accent-hover: #186F65; --accent-soft: #153933;
+  --success: #7ED9AE; --warning: #F5C477; --danger: #FFA49D;
+  --button-border-hover: #6C91CA; --danger-border: #78413F;
+  --danger-hover: #542B2C; --focus-ring: #285C55;
+  --neutral: #A0B2C5; --info-soft: #193C39; --success-soft: #173C2E;
+  --warning-soft: #3E321E; --danger-soft: #3E2529; --neutral-soft: #26313F;
+  --shadow: 0 1px 2px rgb(0 0 0 / 12%);
+}

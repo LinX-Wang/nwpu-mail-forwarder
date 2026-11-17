@@ -1,0 +1,13 @@
+/* Self-hosted fonts, SIL OFL 1.1. Licenses: static/fonts/*-OFL.txt. */
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 100 900;
+  font-display: swap; src: url('fonts/Inter.woff2?v=172e27c10606e831') format('woff2');
+}
+@font-face {
+  font-family: 'Noto Sans SC'; font-style: normal; font-weight: 100 900;
+  font-display: swap; src: url('fonts/NotoSansSC.woff2?v=82eae2ae4d21604e') format('woff2');
+}
+@font-face {
+  font-family: 'LinX JetBrains Mono'; font-style: normal; font-weight: 100 800;
+  font-display: swap; src: url('fonts/JetBrainsMono.woff2?v=c93a5dfa29da0d96') format('woff2');
+}

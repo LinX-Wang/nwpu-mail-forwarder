@@ -1,0 +1,14 @@
+{% extends 'base.html' %}{% from 'components.html' import icon with context %}
+{% block page_actions %}<label class="auto-refresh-control"><input type="checkbox" id="logs-auto-refresh" checked>自动刷新</label>{% endblock %}
+{% block content %}
+<div class="logs-summary" aria-label="当前日志片段统计">
+{% for key,title in [('total','当前事件'),('warning','警告'),('error','错误'),('latest','最近事件时间')] %}<article class="log-stat"><span>{{ title }}</span><strong data-log-stat="{{ key }}">—</strong><span class="field-help">{{ '当前加载的日志片段' if key=='total' else 'WARNING 级别' if key=='warning' else 'ERROR / CRITICAL' if key=='error' else '最近一条事件的时间' }}</span></article>{% endfor %}
+</div>
+<div class="logs-layout">
+<section class="panel logs-panel"><div class="panel-heading"><div class="section-heading"><span class="section-icon">{{ icon('logs') }}</span><div><h2>运行事件</h2><p>最近 32 KiB 脱敏日志 · 仅包含时间、任务 ID 和错误类别</p></div></div><span class="small-counter" id="log-count">读取中</span></div>
+<div class="logs-toolbar"><label class="search-field">{{ icon('search') }}<input type="search" id="log-search" aria-label="搜索日志" placeholder="搜索任务 ID、事件或错误类别"></label><select id="log-level" aria-label="筛选日志级别"><option value="all">全部级别</option><option value="INFO">INFO · 信息</option><option value="WARNING">WARNING · 警告</option><option value="ERROR">ERROR · 错误</option><option value="DEBUG">DEBUG · 调试</option></select><div class="log-actions"><button class="button button-secondary" type="button" id="copy-logs">{{ icon('copy') }}复制日志</button><button class="button button-ghost" type="button" id="clear-logs" data-tooltip="保留服务器日志，仅清空视图">{{ icon('trash') }}清空视图</button></div></div>
+<div class="log-column-labels"><span>时间</span><span>级别</span><span>事件类型</span><span>事件描述</span></div><pre id="log-source" hidden>{{ text }}</pre><div id="log-entries" class="log-entries" role="region" aria-label="脱敏日志条目" tabindex="0"><noscript><pre>{{ text }}</pre></noscript></div>
+<div class="panel-bottom log-footer"><span>{{ icon('shield') }}不包含邮件正文或附件</span><span id="log-refresh-time">正在读取日志</span></div></section>
+<aside class="panel log-insights"><div class="panel-heading"><div><h2>当前服务</h2><p>来自后台的真实运行状态。</p></div></div><div class="form-body"><div class="insight-row"><span>学校邮箱</span><span data-imap-status>读取中</span></div><div class="insight-row"><span>QQ SMTP</span><span data-smtp-status>读取中</span></div><div class="insight-row"><span>邮件监听</span><span data-listener-status>读取中</span></div><div class="insight-row"><span>监听方式</span><strong data-listener-mode>读取中</strong></div><div class="log-scope"><h3>日志与隐私</h3><p>加载最近 32 KiB 日志。上方统计只针对这一片段。</p><p>清空视图保留服务器日志；刷新后可重新读取。</p><p>自动刷新每 15 秒进行，保留搜索与筛选。日志不记录密码、正文或附件内容。</p></div></div></aside>
+</div>
+{% endblock %}
